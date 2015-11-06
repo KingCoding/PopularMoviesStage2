@@ -1,0 +1,33 @@
+<resources>
+    <string name="title_activity_movie_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_sort_key">sort_criteria_list</string>
+    <string name="pref_sort_title">Sort By</string>
+    <string name="pref_sort_pre_summary_message">Movies will be sorted by: </string>
+    <string-array name="pref_sort_list_titles">
+        <item>rating ascending</item>
+        <item>rating descending</item>
+        <item>popularity ascending</item>
+        <item>popularity descending</item>
+    </string-array>
+    <string-array name="pref_sort_list_values">
+        <item>@string/rating_asc</item>
+        <item>@string/rating_desc</item>
+        <item>@string/popularity_asc</item>
+        <item>@string/popularity_desc</item>
+    </string-array>
+
+    <string name="num_cols_key">num_cols_key</string>
+    <string name="num_cols_title"># Columns</string>
+    <string name="num_cols_title_warning">(Orientation wise)</string>
+    <string name="num_cols_pre_summary">Number Of Columns set to: </string>
+
+    <string name="nav_key">nav_key</string>
+    <string name="nav_title">Show Navigation Bar</string>
+    <string name="nav_enable_message">Navigation Bar will be shown</string>
+    <string name="nav_disable_message">Navigation Bar will be hidden</string>
+
+</resources>

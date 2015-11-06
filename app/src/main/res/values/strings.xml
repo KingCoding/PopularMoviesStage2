@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PopularMoviesStage1</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">General Settings</string>
+    <string name="title_activity_movie_detail">MovieDetail</string>
+    <string name="movies_setting">movies_setting</string>
+    <string name="detail_settings">detail_settings</string>
+
+    <string name="button_prev">PREV</string>
+    <string name="button_next">NEXT</string>
+    <string name="movie_duration_unit">min</string>
+
+
+    <!-- String variables for the Movie endpoints -->
+    <string name="rating_asc">vote_average.asc</string>
+    <string name="rating_desc">vote_average.desc</string>
+    <string name="popularity_asc">popularity.asc</string>
+    <string name="popularity_desc">popularity.desc</string>
+
+    <string name="gridView_width_key">gvw</string>
+    <string name="gridView_height_key">gvh</string>
+
+    <string name="def_num_cols_key">def_num_cols_key</string>
+    <string name="max_num_cols_key">max_num_cols_key</string>
+    <string name="page_key">page</string>
+
+    <string name="BASE_URL">http://api.themoviedb.org/3/</string>
+    <string name="DISCOVER_MOVIE_ENDPOINT">discover/movie?</string>
+    <string name="SORT_KEY_NAME">sort_by</string>
+    <string name="SORT_POPULARITY_DESCENDING">popularity.desc</string>
+    <string name="SORT_RATING_DESCENDING">vote_average.desc</string>
+    <string name="MAIN_DISCOVER_MOVIE_LIST_NAME">results</string>
+    <string name="MOVIE_POSTER_PATH_ATTRIBUTE">poster_path</string>
+    <string name="POSTER_PATH_BASE_URL">http://image.tmdb.org/t/p/</string>
+    <string name="MOVIE_ID_ATTRIBUTE">id</string>
+    <string name="MOVIE_ENDPOINT">movie/</string>
+    <string name="MOVIE_TITLE_ATTRIBUTE">title</string>
+    <string name="MOVIE_RELEASE_DATE_ATTRIBUTE">release_date</string>
+    <string name="MOVIE_DURATION_ATTRIBUTE">runtime</string>
+    <string name="MOVIE_RATING_ATTRIBUTE">vote_average</string>
+    <string name="MOVIE_SYPNOSIS_ATTRIBUTE">overview</string>
+
+
+    <!--Array for the sizes  "w92", "w154", "w185", "w342", "w500", "w780", or "original" -->
+    <string-array name="images_sizes">
+        <item>"w92"</item>
+        <item>"w154"</item>
+        <item>"w185"</item>
+        <item>"w342"</item>
+        <item>"w500"</item>
+        <item>"w780"</item>
+        <item>"original"</item>
+    </string-array>
+
+    <!-- API Key for accessing the movie db enpoint -->
+    <string name="API_KEY">Removed For Submission</string> <!--To be removed from this XML file prior to submission-->
+    <string name="API_KEY_NAME">api_key</string>
+
+</resources>

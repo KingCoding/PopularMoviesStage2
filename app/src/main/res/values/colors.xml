@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="image_background_color" type="color">#00000000</item>
+    <item name="background_color" type="color">#F0F4C3</item>
+    <item name="highlight_color" type="color">#827717</item>
+    <item name="button_color" type="color">#CDDC39</item>
+    <item name="light_font_color" type="color">#FFFFFF</item>
+    <item name="dark_font_color" type="color">#000000</item>
+</resources>
