@@ -60,7 +60,10 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
 
     private Integer tasksCompletedForAdapterPopulation;
 
-    private Integer tasksRequiredForAdapterPopulation;
+    Integer tasksRequiredForAdapterPopulation;
+
+    boolean callFromOnsizeChangeOrSetAttributesMethod; //Variable that indicates if the populateAdapter method is called from
+                                                              // the onsizeChanged method or the setAttributes method
 
     private MovieListeners.MovieEditTextOnFocusChangeListener onFocusChangeListener;
 
@@ -97,6 +100,7 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
                                                // The call of the onsizeChanged method of the CustomedGridView instance
                                                // Then afterward, only the one task will need to be completed (the call to onsizeChanged on con
                                                // figuration changes or the call to onStart)
+        callFromOnsizeChangeOrSetAttributesMethod = false; //
 
         firstVisiblePositions = new HashMap<Integer, Integer>();
 
@@ -325,6 +329,12 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
 
         if(prevSortCriteria==null || !prevSortCriteria.equals(currSortCriteria)) {
             currPage = (int) getResources().getDimension(R.dimen.default_page);
+
+            if(firstVisiblePositions != null)
+                firstVisiblePositions.clear();
+            else
+                firstVisiblePositions = new HashMap<Integer, Integer>();
+
             return true;
         }
 
@@ -371,6 +381,11 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
             //The adapter might already contain some data at this point due to size change and re-population.
             //So we should clear the adapter to ensure it's in the right state
             resetAdapterIfNeeded();
+
+            if(tasksRequiredForAdapterPopulation == 2) //At the beginning, we should signal the call to the populateAdapter method
+                                                       // is from this setAttributes Method
+                callFromOnsizeChangeOrSetAttributesMethod = true;
+
             populateAdapter();
         }
         else{ //the task execution failed, we should restart it
@@ -402,7 +417,20 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
 
     synchronized (tasksRequiredForAdapterPopulation) {
 
-        tasksCompletedForAdapterPopulation++;
+
+        if(
+                (tasksRequiredForAdapterPopulation == 2 &&
+                        callFromOnsizeChangeOrSetAttributesMethod) //At the beginning (When tasksRequiredForAdapterPopulation == 2),
+                                                                   // the valid calls to this method should be made only from the setAttributes method of this class
+                                                                   // or from the onsizeChanged method of the custom gridView
+                ||
+                tasksRequiredForAdapterPopulation == 1 //After start, every call to this method is valid
+                ||
+                tasksCompletedForAdapterPopulation == -1 //Used to signal the call is following an orientation change
+                )
+
+            tasksCompletedForAdapterPopulation++;
+
         if((tasksCompletedForAdapterPopulation == tasksRequiredForAdapterPopulation
                 || tasksCompletedForAdapterPopulation == 0)) {
 
@@ -432,6 +460,8 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
             tasksCompletedForAdapterPopulation  = 0;
             tasksRequiredForAdapterPopulation = 1; //after the first populating of the adapter only one task should be completed before the adapter is populated
         }
+
+        callFromOnsizeChangeOrSetAttributesMethod = false;
     }
 
     }

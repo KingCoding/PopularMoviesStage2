@@ -98,6 +98,11 @@ public class CustomedGridView extends GridView{
             movieFragment.resetAdapterIfNeeded(); //First make sure the adapter is cleared before attempting to populate it.
                                                   // If not the adapter will have duplicate content when onSizeChanged is often called directly
                                                   // like when the keyboard pops up in portrait mode and causes a shrink of the gridView Height.
+
+            if(movieFragment.tasksRequiredForAdapterPopulation == 2) //At the beginning, we should signal the call to the populateAdapter method
+                // is from this onSizeChanged Method
+                movieFragment.callFromOnsizeChangeOrSetAttributesMethod = true;
+
             movieFragment.populateAdapter(); //attempt to populate the adapter since we might be the last task awaited to populate the adapter
         }
 
