@@ -2,6 +2,7 @@ package com.example.lan.samuel_dsldevice.popularmoviesstage1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -62,11 +63,15 @@ public class MovieDetailActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment implements MovieTask.MovieTaskCallBackInstance{
 
+        String movieId;
+
+        boolean movieDetailsLoaded;
         //private MovieTask movieTask;
         DetailViewHolder detailViewHolder;
 
         public PlaceholderFragment() {
             setRetainInstance(true); //We don't want this fragment instance to be killed while the background task is being executed
+            movieDetailsLoaded = false;
         }
 
         @Override
@@ -84,20 +89,46 @@ public class MovieDetailActivity extends ActionBarActivity {
                 //We initialize the view holder
                 detailViewHolder = new DetailViewHolder(detailInnerContainer);
 
-                MovieTask movieTask = new MovieTask(this);
-                String movieId = intent.getStringExtra(Intent.EXTRA_TEXT);
+                movieId = intent.getStringExtra(Intent.EXTRA_TEXT);
 
                 HashMap<String, String> urlParameters = new HashMap<String, String>();
                 urlParameters.put(MovieUtility.getAPI_KEY_NAME(getActivity()),MovieUtility.getAPI_KEY(getActivity()));
 
-                URL url = movieTask.buildURL(MovieUtility.getBASE_URL(getActivity()), MovieUtility.getMOVIE_ENDPOINT(getActivity()) + movieId, urlParameters);
-
-                movieTask.execute(url);
+                loadMovieDetails();
 
             }
 
             return rootView;
         }
+
+        private void loadMovieDetails(){
+
+            try {
+                MovieTask movieTask = new MovieTask(this);
+
+                HashMap<String, String> urlParameters = new HashMap<String, String>();
+                urlParameters.put(MovieUtility.getAPI_KEY_NAME(getActivity()), MovieUtility.getAPI_KEY(getActivity()));
+
+                URL url = movieTask.buildURL(MovieUtility.getBASE_URL(getActivity()), MovieUtility.getMOVIE_ENDPOINT(getActivity()) + movieId, urlParameters);
+
+                movieTask.execute(url);
+            }
+            catch(Exception exp){
+
+            }
+        }
+
+       @Override
+       public void onStart(){
+
+           super.onStart();
+
+           if(!movieDetailsLoaded){
+               setAttributes(null);
+           }
+
+       }
+
 
         @Override
         public String getMainListName() {
@@ -125,20 +156,20 @@ public class MovieDetailActivity extends ActionBarActivity {
          */
         public void setAttributes(HashMap<String, Object> attributes) {
 
-            if(detailViewHolder != null)
-            {
-                detailViewHolder.titleTextView.setText((String)attributes.get(MovieUtility.getMOVIE_TITLE_ATTRIBUTE(getActivity())));
+           if(attributes != null) {
+               if (detailViewHolder != null) {
+                   detailViewHolder.titleTextView.setText((String) attributes.get(MovieUtility.getMOVIE_TITLE_ATTRIBUTE(getActivity())));
 
-                int currImageSizeRange = 3;
-                String currUrl =  MovieUtility.getPOSTER_PATH_BASE_URL(getActivity())
-                                + MovieUtility.getImageSizeKey(currImageSizeRange, getActivity())
-                                + attributes.get(MovieUtility.getMOVIE_POSTER_PATH_ATTRIBUTE(getActivity()));
-                Picasso.with(getActivity()).load(currUrl).into(detailViewHolder.movieImageView);
+                   int currImageSizeRange = 3;
+                   String currUrl = MovieUtility.getPOSTER_PATH_BASE_URL(getActivity())
+                           + MovieUtility.getImageSizeKey(currImageSizeRange, getActivity())
+                           + attributes.get(MovieUtility.getMOVIE_POSTER_PATH_ATTRIBUTE(getActivity()));
+                   Picasso.with(getActivity()).load(currUrl).into(detailViewHolder.movieImageView);
 
-                //final ScrollView scrollView = (ScrollView)getActivity().findViewById(R.id.movie_detail_scrollview);
+                   //final ScrollView scrollView = (ScrollView)getActivity().findViewById(R.id.movie_detail_scrollview);
 
-                //Position the scrollView at the middle
-                //scrollView.scrollTo(0, scrollView.getBottom()/2);
+                   //Position the scrollView at the middle
+                   //scrollView.scrollTo(0, scrollView.getBottom()/2);
                 /*
                 ViewTreeObserver vto = scrollView.getViewTreeObserver();
                 vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -148,11 +179,25 @@ public class MovieDetailActivity extends ActionBarActivity {
                 });
                 */
 
-                detailViewHolder.yearTextView.setText((String) attributes.get(MovieUtility.getMOVIE_RELEASE_DATE_ATTRIBUTE(getActivity())));
-                detailViewHolder.durationTextView.setText((String)attributes.get(MovieUtility.getMOVIE_DURATION_ATTRIBUTE(getActivity()))+getActivity().getString(R.string.movie_duration_unit));
-                detailViewHolder.ratingTextView.setText((String)attributes.get(MovieUtility.getMOVIE_RATING_ATTRIBUTE(getActivity())));
-                detailViewHolder.sypnosisTextView.setText((String)attributes.get(MovieUtility.getMOVIE_SYPNOSIS_ATTRIBUTE(getActivity())));
-            }
+                   detailViewHolder.yearTextView.setText((String) attributes.get(MovieUtility.getMOVIE_RELEASE_DATE_ATTRIBUTE(getActivity())));
+                   detailViewHolder.durationTextView.setText((String) attributes.get(MovieUtility.getMOVIE_DURATION_ATTRIBUTE(getActivity())) + getActivity().getString(R.string.movie_duration_unit));
+                   detailViewHolder.ratingTextView.setText((String) attributes.get(MovieUtility.getMOVIE_RATING_ATTRIBUTE(getActivity())));
+                   detailViewHolder.sypnosisTextView.setText((String) attributes.get(MovieUtility.getMOVIE_SYPNOSIS_ATTRIBUTE(getActivity())));
+
+                   movieDetailsLoaded = true;
+               }
+           }
+           else{
+
+               //Wait 10 seconds before retrying.
+               Handler handler = new Handler();
+               handler.postDelayed(new Runnable(){
+                   public void run(){
+                       loadMovieDetails();
+                   }
+               }, 10000);
+
+           }
         }
 
 

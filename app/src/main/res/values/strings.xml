@@ -55,7 +55,7 @@
     </string-array>
 
     <!-- API Key for accessing the movie db enpoint -->
-    <string name="API_KEY">Removed For Submission</string> <!--To be removed from this XML file prior to submission-->
+    <string name="API_KEY">Removed For Submission</string> <!--Removed from this XML file prior to submission-->
     <string name="API_KEY_NAME">api_key</string>
 
 </resources>

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.Display;
@@ -245,6 +246,8 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
     //This method will probably be optimized later
     void updateMovies(){
 
+      try{
+
         resetAdapterIfNeeded(); //movieAdapter.clear();
         custGd.updateNumColumns(); //We must initiate the update of the number of columns from here
                                    // because the size of the gridView doesn't change and its onSizeChanged method won't be called
@@ -257,7 +260,7 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
                 scrollListenerEnabled = false;
 
                 //Query network data with asynctask
-                String sortMode = MovieUtility.getStringSharedPreference(activity.getApplicationContext(), getString(R.string.pref_sort_key),
+                String sortMode = MovieUtility.getStringSharedPreference(activity/*.getApplicationContext()*/, getString(R.string.pref_sort_key),
                         urlParameters.get(MovieUtility.getSORT_KEY_NAME(activity)));
                 urlParameters.put(MovieUtility.getSORT_KEY_NAME(activity), sortMode);
                 urlParameters.put(MovieUtility.getAPI_KEY_NAME(activity), MovieUtility.getAPI_KEY(activity));
@@ -304,13 +307,21 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
 
         }
 
+      }
+      catch(Exception exp){
+
+      }
+
     }
 
 
     private boolean needsToBuildUrl()
     {
 
-        if(url == null)
+        if(url == null ||
+                absolutePosterPaths == null //needed when there are connection issues and the data can't be retrieved.
+                                            // We need the application to try retrieving data again on the next call the onStart
+                )
         {
 
             return true; //It's only at the beginning that the url can be null
@@ -389,8 +400,23 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
             populateAdapter();
         }
         else{ //the task execution failed, we should restart it
-            url = null;
-            updateMovies();
+
+            url = null; //This will make the updateMovies method to create a new url and query the server
+                        // instead of just repopulating the gridView with previously fetched data
+
+            //The 2 following instructions are useful to avoid the bug
+            //that makes the gridView display movies that are not present in its adapter
+            movieAdapter.setNotifyOnChange(true);
+            movieAdapter.notifyDataSetChanged();
+
+            //Wait 10 seconds before retrying.
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable(){
+                public void run(){
+                    updateMovies();
+                }
+            }, 10000);
+
         }
 
     }
@@ -434,27 +460,33 @@ public class MoviesGridFragment extends Fragment implements MovieTask.MovieTaskC
         if((tasksCompletedForAdapterPopulation == tasksRequiredForAdapterPopulation
                 || tasksCompletedForAdapterPopulation == 0)) {
 
-            //If needed, We set the onScrollListener for the custom gridView instance here
-            //Because we want to make sure we always do it after onsizeChanged has been called on the
-            //GridView instance; so to avoid handling unnecessary events in the listener.
-            if(!scrollListenerEnabled)
-            {//CustGd can't be null at this stage
-                custGd.setOnScrollListener(onScrollListener);
-            }
+           if(absolutePosterPaths != null) {
+               //If needed, We set the onScrollListener for the custom gridView instance here
+               //Because we want to make sure we always do it after onsizeChanged has been called on the
+               //GridView instance; so to avoid handling unnecessary events in the listener.
+               if (!scrollListenerEnabled) {//CustGd can't be null at this stage
+                   custGd.setOnScrollListener(onScrollListener);
+               }
 
-            //Set the paths in the movie adapter
-            //We first set the adapter not to notify its view of any change when it's being populated,
-            //because it will be very computationally intensive
-            movieAdapter.setNotifyOnChange(false);
-            for (String path : absolutePosterPaths) {
-                movieAdapter.add(path);
+               //Set the paths in the movie adapter
+               //We first set the adapter not to notify its view of any change when it's being populated,
+               //because it will be very computationally intensive
+               movieAdapter.setNotifyOnChange(false);
+               for (String path : absolutePosterPaths) {
+                   movieAdapter.add(path);
 
-            }
+               }
 
-                movieAdapter.notifyDataSetChanged();
-                custGd.setSelection(tempFirstPos); // This instruction implicitly sets the adapter notification state to true.
-                                                   // No need to call movieAdapter.setNotifyOnChange(true); after this
-                firstPos = tempFirstPos;
+               movieAdapter.notifyDataSetChanged();
+               custGd.setSelection(tempFirstPos); // This instruction implicitly sets the adapter notification state to true.
+               // No need to call movieAdapter.setNotifyOnChange(true); after this
+               firstPos = tempFirstPos;
+
+           }
+           else
+           { //We assume this is a connection issue and we try to retrieve the data again
+               setAttributes(null);
+           }
 
             //Initialize the task controller variables to their regular values
             tasksCompletedForAdapterPopulation  = 0;
