@@ -1,0 +1,158 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_color"
+    android:id="@+id/review_detail_container"
+    tools:context="com.example.lan.samuel_dsldevice.popularmoviesstage2.ReviewDisplayActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:background="@color/highlight_color"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:id="@+id/review_icon_container">
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:background="@color/highlight_color">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@color/highlight_color"
+            android:textSize="@dimen/title_font_size"
+            android:textColor="@color/light_font_color"
+            android:id="@+id/review_movie_title_textView"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
+            >
+
+        </TextView>
+    </ScrollView>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:background="@color/background_color"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:scrollbars = "vertical"
+            android:textSize="@dimen/rating_font_size"
+            android:textStyle="bold"
+            android:text="PRESS BACK BUTTON TO RETURN TO MAIN MOVIE DETAILS"
+            android:background="@color/background_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/background_color"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/button_prev_review"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:text="@string/button_prev"
+            android:background="@color/button_color"
+            >
+
+        </Button>
+
+        <TextView
+            android:id="@+id/review_display_title_textview"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:scrollbars = "vertical"
+            android:textSize="@dimen/year_font_size"
+            android:textStyle="bold"
+            android:background="@color/background_color"/>
+
+        <Button
+            android:id="@+id/button_next_review"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:text="@string/button_next"
+            android:background="@color/button_color"
+            >
+
+        </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:background="@color/background_color"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/reviewer_textview"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:background="@color/background_color"
+                android:textSize="@dimen/duration_font_size"
+                android:scrollbars = "vertical"
+                >
+
+            </TextView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/background_color">
+            <TextView
+                android:id="@+id/review_display_message_textview"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:background="@color/background_color"
+                android:textSize="@dimen/synopsis_font_size"
+                android:scrollbars = "vertical"
+                >
+
+            </TextView>
+
+            </ScrollView>
+        </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>

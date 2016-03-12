@@ -7,4 +7,6 @@
     <item name="button_color" type="color">#CDDC39</item>
     <item name="light_font_color" type="color">#FFFFFF</item>
     <item name="dark_font_color" type="color">#000000</item>
+    <item name="even_list_item_color" type="color">#ffeb99</item>
+    <item name="odd_list_item_color" type="color">#ffdd4d</item>
 </resources>

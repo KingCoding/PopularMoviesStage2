@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lan.samuel_dsldevice.popularmoviesstage1" >
+    package="com.example.lan.samuel_dsldevice.popularmoviesstage2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,25 +10,31 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".PM1_MainActivity"
+            android:name=".PM2_MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MovieDetailActivity"
-            android:label="@string/title_activity_movie_detail"
-            android:parentActivityName=".PM1_MainActivity" >
-        </activity>
-        <activity
             android:name=".MovieSettingsActivity"
             android:label="@string/title_activity_movie_settings"
-            android:parentActivityName=".PM1_MainActivity" >
-
+            android:parentActivityName=".PM2_MainActivity">
         </activity>
+
+        <provider
+            android:name=".favoriteData.FavoriteProvider"
+            android:authorities="com.example.lan.samuel_dsldevice.popularmoviesstage2.app" >
+        </provider>
+
     </application>
+
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
 
 </manifest>

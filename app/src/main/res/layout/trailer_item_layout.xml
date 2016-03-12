@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id= "@+id/trailer_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:drawableLeft="@drawable/play_trailer_icon"
+    >
+</Button>
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/trailer_item"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@color/background_color"
+    >
+
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4"
+    android:id="@+id/trailer_title_horizontal_scrollView"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:clickable="true"
+        android:textSize="@dimen/rating_font_size"
+        android:id="@+id/trailer_title_textView"
+        >
+    </TextView>
+</HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:scrollHorizontally="true"
+            android:textSize="@dimen/rating_font_size"
+            android:id="@+id/trailer_size_textView"
+            >
+        </TextView>
+
+</LinearLayout>

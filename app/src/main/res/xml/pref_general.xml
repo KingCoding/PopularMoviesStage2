@@ -12,6 +12,11 @@
         android:title="@string/num_cols_title">
     </ListPreference>
 
+    <com.example.lan.samuel_dsldevice.popularmoviesstage2.NumberPickerPreference
+        android:key="@string/min_img_dp_size_key"
+        android:title="@string/min_img_dp_size_title"
+        android:defaultValue="@integer/smallest_img_dp_size" />
+
     <CheckBoxPreference
         android:key="@string/nav_key"
         android:title="@string/nav_title"

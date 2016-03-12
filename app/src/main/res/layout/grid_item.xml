@@ -3,10 +3,11 @@
     android:id="@+id/grid_item_imageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="2dp"
-    android:paddingLeft="2dp"
+    android:paddingRight="3dp"
+    android:paddingLeft="3dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
+    android:scaleType="centerInside"
     android:background="@drawable/grid_item_background"
     >
 

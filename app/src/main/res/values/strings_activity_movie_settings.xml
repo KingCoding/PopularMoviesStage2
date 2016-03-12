@@ -12,18 +12,27 @@
         <item>rating descending</item>
         <item>popularity ascending</item>
         <item>popularity descending</item>
+        <item>favorite</item>
     </string-array>
     <string-array name="pref_sort_list_values">
         <item>@string/rating_asc</item>
         <item>@string/rating_desc</item>
         <item>@string/popularity_asc</item>
         <item>@string/popularity_desc</item>
+        <item>@string/favorite</item>
+
     </string-array>
 
     <string name="num_cols_key">num_cols_key</string>
     <string name="num_cols_title"># Columns</string>
     <string name="num_cols_title_warning">(Orientation wise)</string>
     <string name="num_cols_pre_summary">Number Of Columns set to: </string>
+
+    <!-- Variable key for the minimum dp size of thumbnail -->
+    <string name="min_img_dp_size_key">min_img_dp_size_key</string>
+    <string name="min_img_dp_size_title">Set min dp size of images</string>
+    <string name="min_img_dp_size_summary">min image dp size set to: </string>
+
 
     <string name="nav_key">nav_key</string>
     <string name="nav_title">Show Navigation Bar</string>

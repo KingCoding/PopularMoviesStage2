@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".PM1_MainActivity$MoviesGridFragment"
+    tools:context=".PM2_MainActivity$MoviesGridFragment"
     >
 <item android:id="@+id/movie_settings"
     android:title="@string/movies_setting"

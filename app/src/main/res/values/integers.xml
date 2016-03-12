@@ -4,5 +4,13 @@
     <integer name="maximum">100</integer>
     <!-- default page-->
     <integer name="default_page">1</integer>
+    <integer name="icon_size">40</integer>
+
+    <!-- smallest image size-->
+    <integer name="smallest_img_dp_size">40</integer>
+    <!-- default image size-->
+    <integer name="default_img_dp_size">90</integer>
+    <!-- image size variation step -->
+    <integer name="img_dp_size_variation_step">10</integer>
 
 </resources>
